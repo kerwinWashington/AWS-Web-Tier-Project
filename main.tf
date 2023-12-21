@@ -40,11 +40,6 @@ resource "aws_internet_gateway" "gw" {
   }
 }
 
-# resource "aws_internet_gateway_attachment" "example" {
-#   internet_gateway_id = aws_internet_gateway.gw.id
-#   vpc_id              = aws_vpc.main.id
-# }
-
 resource "aws_nat_gateway" "natgw" {
   allocation_id = aws_eip.nat-eip.id
   subnet_id = aws_subnet.public[0].id
@@ -58,18 +53,15 @@ resource "aws_nat_gateway" "natgw" {
 }
 
 resource "aws_eip" "nat-eip" {
-  # instance = aws_instance.web.id
   domain   = "vpc"
 }
 
 resource "aws_route_table" "public" {
   vpc_id = aws_vpc.main.id
-
   route {
     cidr_block = "0.0.0.0/0"
     gateway_id = aws_internet_gateway.gw.id
   }
-
   tags = {
     Name = "washington-pub-rt"
   }
@@ -78,12 +70,10 @@ resource "aws_route_table" "public" {
 resource "aws_route_table" "private" {
   vpc_id = aws_vpc.main.id
   count = var.publicSubnetCount
-
   route {
     cidr_block = "0.0.0.0/0"
     gateway_id = aws_nat_gateway.natgw.id
   }
-
   tags = {
     Name = "washington-priv-rt"
   }
