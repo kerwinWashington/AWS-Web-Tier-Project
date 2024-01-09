@@ -115,7 +115,7 @@ resource "aws_security_group" "lb-sg" {
   }
 }
 
-#scale up policy
+# Scale Up Policy
 resource "aws_autoscaling_policy" "scale-up" {
   name = "washington-scale-up-policy"
   autoscaling_group_name = aws_autoscaling_group.asg.name
@@ -125,7 +125,7 @@ resource "aws_autoscaling_policy" "scale-up" {
   policy_type = "SimpleScaling"
 }
 
-#Scale Up Alarm
+# Scale Up Alarm
 resource "aws_cloudwatch_metric_alarm" "sacle-up-alarm" {
   alarm_name = "washington-scale-up-alarm"
   alarm_description = "asg-scale-up-cpu-alarm"
@@ -143,7 +143,7 @@ resource "aws_cloudwatch_metric_alarm" "sacle-up-alarm" {
   alarm_actions = [aws_autoscaling_policy.scale-up.arn]
 }
 
-#scale down policy
+# Scale Down Policy
 resource "aws_autoscaling_policy" "scale-down" {
   name = "washington-scale-down-policy"
   autoscaling_group_name = aws_autoscaling_group.asg.name
@@ -152,7 +152,8 @@ resource "aws_autoscaling_policy" "scale-down" {
   cooldown = "300"
   policy_type = "SimpleScaling"
 }
-#Scale down alarm
+
+# Scale Down Alarm
 resource "aws_cloudwatch_metric_alarm" "sacle-down-alarm" {
   alarm_name = "washington-scale-down-alarm"
   alarm_description = "asg-scale-down-cpu-alarm"

@@ -9,5 +9,5 @@ terraform {
 
 provider "aws" {
   # Configuration options
-  profile = "kwashingtontf"
+  profile = "<profileName>"
 }

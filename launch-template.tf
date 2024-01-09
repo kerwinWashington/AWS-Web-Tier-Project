@@ -1,5 +1,4 @@
 ### Launch Template ###
-
 resource "aws_launch_template" "asg-lt" {
   iam_instance_profile {
     arn = "arn:aws:iam::782863115905:instance-profile/S3-role"
